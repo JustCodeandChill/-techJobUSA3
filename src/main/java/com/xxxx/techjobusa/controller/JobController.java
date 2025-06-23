@@ -1,7 +1,10 @@
 package com.xxxx.techjobusa.controller;
 
 import com.xxxx.techjobusa.entity.Job;
+import com.xxxx.techjobusa.model.JobResponse;
 import com.xxxx.techjobusa.repository.JobRepository;
+import com.xxxx.techjobusa.service.JobService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.stereotype.Controller;
@@ -14,10 +17,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobs")
+@Slf4j
 //@RequestMapping("/")
 public class JobController {
     @Autowired
     private JobRepository jobRepository;
+
+    @Autowired
+    private JobService jobService;
 
     @GetMapping("/")
     public List<Job> getJobs() {
@@ -27,10 +34,11 @@ public class JobController {
     }
 
     @GetMapping("/search")
-    public List<Job> searchJobs(@RequestParam("what") String keyWord,
+    public List<JobResponse> searchJobs(@RequestParam("what") String keyWord,
                                 @RequestParam("where") String desiredLocation,
-                                @RequestParam("number_of_results") @DefaultValue("10") int numberOfResults) {
-        List<Job> jobs = jobRepository.findByTitleContainingIgnoreCaseAndLocationIgnoreCase(keyWord, desiredLocation);
+                                @RequestParam(value = "number_of_results", required = false, defaultValue = "10" ) int numberOfResults) {
+        log.info("keyWord = " + keyWord + desiredLocation + numberOfResults);
+        List<JobResponse> jobs = jobService.findByTitleContainingIgnoreCaseAndLocationIgnoreCase(keyWord, desiredLocation);
         return jobs;
     }
 }

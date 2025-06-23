@@ -8,7 +8,7 @@ import lombok.Data;
 @Table(name = "Jobs")
 public class Job {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "title")
     private String title;
@@ -16,13 +16,28 @@ public class Job {
     private String description;
     @Column(name = "company")
     private String companyName;
-    @Column(name = "contract_type")
+    @Column(name = "contractType")
     private String contractType;
-    @Column(name = "apply_url")
+    @Column(name = "applyUrl")
     private String applyUrl;
-    @Column(name = "salary_min")
+    @Column(name = "salaryMin")
     private String salary;
-    @Column(name = "location_id")
-    private String location;
+    @ManyToOne
+//    @JoinColumn(name = "location_id" ,nullable = false)
+    @JoinColumn(name = "locationId", referencedColumnName = "id")
+    private Location location;
 
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", contractType='" + contractType + '\'' +
+                ", applyUrl='" + applyUrl + '\'' +
+                ", salary='" + salary + '\'' +
+                ", location=" +
+                '}';
+    }
 }

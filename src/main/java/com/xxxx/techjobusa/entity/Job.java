@@ -26,10 +26,9 @@ public class Job {
     @Column(name = "salaryMin")
     private String salary;
     @Column(name = "createdAt", nullable = true, updatable = false)
-    private LocalDateTime insertedAt;
-    @Transient
+    private LocalDateTime createdAt;
     @Column(name = "insertedAt", nullable = true, updatable = false)
-    private LocalDateTime updatedAt;
+    private LocalDateTime insertedAt;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "location_id" ,nullable = false)
     @JoinColumn(name = "locationId", referencedColumnName = "id", nullable = true)

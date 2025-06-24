@@ -9,9 +9,12 @@ import com.xxxx.techjobusa.model.JobResponse;
 import com.xxxx.techjobusa.repository.JobRepository;
 import com.xxxx.techjobusa.repository.LocationRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -68,6 +71,7 @@ public class JobService {
         job.setContractType(adzunaJobStructure.getContractType());
         job.setApplyUrl(adzunaJobStructure.getRedirectUrl());
         job.setSalary(adzunaJobStructure.getSalaryMin().toString());
+        job.setCreatedAt(adzunaJobStructure.getCreated());
 
         String longitude = Optional.ofNullable(adzunaJobStructure.getLongitude())
                 .map(Object::toString)
@@ -118,6 +122,13 @@ public class JobService {
                 .contractType(job.getContractType())
                 .applyUrl(job.getApplyUrl())
                 .salary(job.getSalary())
+                .createdAt(job.getCreatedAt())
                 .build();
+    }
+
+//    @Scheduled(cron = "0 */60 * * * ?")// every 1 minute
+    @Scheduled(cron = "0 0 2 * * ?")
+    public void purgeOldJobs() {
+        jobRepository.deleteByInsertedAtBefore(LocalDateTime.now().minusMinutes(2));
     }
 }

@@ -41,4 +41,12 @@ public class JobController {
         List<JobResponse> jobs = jobService.findByTitleContainingIgnoreCaseAndLocationIgnoreCase(keyWord, desiredLocation);
         return jobs;
     }
+
+    @GetMapping("/search2")
+    public List<JobResponse> searchJobs2() {
+        List<Job> jobs = this.jobService.getJobsFromApi(); // this will call the api>
+        log.info("jobs = " + jobs);
+        return null;
+    }
+    // call api to have the job
 }

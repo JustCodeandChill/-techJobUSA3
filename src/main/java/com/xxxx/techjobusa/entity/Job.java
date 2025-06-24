@@ -1,7 +1,10 @@
 package com.xxxx.techjobusa.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -16,15 +19,20 @@ public class Job {
     private String description;
     @Column(name = "company")
     private String companyName;
-    @Column(name = "contractType")
+    @Column(name = "contractType", nullable = true)
     private String contractType;
     @Column(name = "applyUrl")
     private String applyUrl;
     @Column(name = "salaryMin")
     private String salary;
-    @ManyToOne
+    @Column(name = "createdAt", nullable = true, updatable = false)
+    private LocalDateTime insertedAt;
+    @Transient
+    @Column(name = "insertedAt", nullable = true, updatable = false)
+    private LocalDateTime updatedAt;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "location_id" ,nullable = false)
-    @JoinColumn(name = "locationId", referencedColumnName = "id")
+    @JoinColumn(name = "locationId", referencedColumnName = "id", nullable = true)
     private Location location;
 
     @Override

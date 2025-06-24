@@ -1,20 +1,4 @@
-html,
-body {
-    padding: 0;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    letter-spacing: 1px;
-}
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-* {
-    box-sizing: border-box;
-}
 
 :root {
     --section-height: 70px;
@@ -26,6 +10,8 @@ a {
     --pink-hover: #ff908b;
     --red: #D71313;
     --support-bgr: #EEEDED;
+    --black-bgr: #0a0a0a;
+    --keyword-padding: 0.4em 0.2em;
 }
 
 .container {

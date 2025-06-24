@@ -1,0 +1,50 @@
+.jobSearch__section {
+    margin: 0;
+    padding: var(--keyword-padding);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: var(--section-height);
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-top: 100px;
+}
+
+.jobSearch__label {
+    width: var(--full-width);
+    font-size: 1.2rem;
+    min-width: 40%;
+    height: 100%;
+    background-color: var(--theme-bg);
+    color: var(--white-text);
+    display: flex;
+    align-items: center;
+    padding: 0.4em 0.2em;
+    font-weight: 600;
+    border-radius: 0 20px 0 0;
+    padding-left: 20px;
+}
+
+.jobSearch__input {
+    margin: 0;
+    border: none;
+    min-width: 100px;
+    width: var(--full-width);
+    height: 100%;
+    display: inline-block;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    padding: 1.2em 1em;
+    transition: 0.3s ease-in-out;
+    border: 2px solid var(--theme-bg);
+    border-radius: 0 0 0 20px;
+}
+
+.jobSearch__input:focus,
+.jobSearch__input:hover {
+    box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
+    outline: 0;
+    border: 2px solid var(--pink-hover);
+    color: var(--black-text);
+}

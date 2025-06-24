@@ -34,5 +34,4 @@ logs/
 *.log
 
 # Coverage and test output
-coverage/
-.jest/
+coverage/ls

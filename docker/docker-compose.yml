@@ -1,24 +1,17 @@
 version: '3.1'
 
 services:
-  ecommerce-mysql:
-    image: mysql
+  techjobusa-mysql:
+    image: mysql:8
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: techjobusa
     ports:
       - "3306:3306"
     volumes:
       - ./data.sql:/docker-entrypoint-initdb.d/data.sql
       - techjobusa-mysql-data:/var/lib/mysql
-
-  ecommerce-redis:
-    image: "redis:latest"
-    container_name: "my-redis-container"
-    ports:
-      - "6379:6379"
-    volumes:
-      - techjobusa-redis-data:/data
 
 
 volumes:

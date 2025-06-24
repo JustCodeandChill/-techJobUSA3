@@ -1,0 +1,220 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    letter-spacing: 1px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --section-height: 70px;
+    --select-width: 60%;
+    --full-width: 100%;
+    --white-text: #fafcfd;
+    --black-text: #000;
+    --theme-bg: #0D1282;
+    --pink-hover: #ff908b;
+    --red: #D71313;
+    --support-bgr: #EEEDED;
+}
+
+.container {
+    background-color: var(--black-bgr);
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.sideBar {
+    transition: 0.4s ease-in-out;
+    background-color: var(--black-bgr);
+    width: var(--full-width);
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+}
+
+.controlBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    max-height: 250px;
+    height: auto;
+    width: 100%;
+    padding: 0.5em;
+    background-color: var(--theme-bg);
+    color: var(--white-text);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: 10px;
+}
+
+.controlBar__mainIcon {
+    display: flex;
+    gap: 10px;
+}
+
+.controlBar__icons {
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-end;
+    align-items: center;
+    gap: 2em;
+    padding-right: 1em;
+}
+
+.showFilter {
+    display: block;
+    cursor: pointer;
+}
+
+/* collapsible */
+.collapse {
+    display: none;
+}
+
+.notCollapse {
+    display: block;
+}
+
+/* for fyi */
+.iconFYI {
+    cursor: pointer;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    transition: 0.4s ease-in-out;
+    max-width: 300px;
+    width: 260px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    right: 0;
+}
+
+.tooltip:hover .tooltiptext,
+.tooltip:focus .tooltiptext {
+    visibility: visible;
+    transform: translate(0em, 1em);
+}
+
+.jobSearch {
+    width: var(--full-width);
+    transition: 0.3s ease-in-out;
+    z-index: 1;
+    padding: 10px;
+}
+/* end fyi */
+
+.searchButton {
+    margin-top: 0.5em;
+    width: var(--full-width);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.searchButton__button {
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+    padding: 0.7em 1.4em;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ff5d5d;
+    color: var(--white-text);
+    transition: 0.3s ease-in-out;
+}
+
+.searchButton__button:hover {
+    -webkit-box-shadow: 1px 1px 12px 2px #ffe3a9;
+    box-shadow: 1px 1px 12px 2px #ffe3a9;
+    outline: 0;
+    border: 1px solid var(--pink-hover);
+    color: var(--white-text);
+}
+
+.map {
+    /*width: 100vw;*/
+}
+
+.upArrow {
+    position: absolute;
+    cursor: pointer;
+    bottom: -500px;
+    left: 0px;
+    z-index: 1000;
+}
+
+@media (min-width: 800px) {
+    .container {
+        grid-template-columns: 30% 70%;
+        column-gap: 1em;
+        background-color: var(--black-bgr);
+    }
+
+    .sideBar {
+        height: 100vh;
+        grid-column-start: 1;
+        grid-column-end: 2;
+        position: relative;
+        background-color: var(--white-text);
+        overflow-y: scroll;
+    }
+
+    .map {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        margin-top: 0;
+    }
+
+    .controlBar {
+        width: 30%;
+        z-index: 100;
+        align-items: center;
+    }
+    .controlBar__icons {
+        gap: 1em;
+        padding-right: 0.1em;
+    }
+
+    .showFilter {
+        display: none;
+    }
+
+    .jobSearch {
+        padding: 0;
+        /*background-color: red;*/
+    }
+
+    .upArrow {
+        display: none;
+    }
+}

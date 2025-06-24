@@ -37,7 +37,7 @@ public class JobController {
     @GetMapping("/search")
     public List<JobResponse> getJobsWhenThereAreNewData(@RequestParam("what") String keyWord,
                                 @RequestParam("where") String desiredLocation,
-                                @RequestParam(value = "number_of_results", required = false, defaultValue = "10" ) int numberOfResults) {
+                                @RequestParam(value = "number_of_results", required = false ) int numberOfResults) {
         log.info("keyWord = " + keyWord + desiredLocation + numberOfResults);
         List<JobResponse> jobs = jobService.findByTitleContainingIgnoreCaseAndLocationIgnoreCase(keyWord, desiredLocation);
         return jobs;
@@ -48,7 +48,7 @@ public class JobController {
             @RequestParam("what") String keyWord,
             @RequestParam("where") String desiredLocation,
             @RequestParam(value = "page", required = false, defaultValue = "1" ) int page,
-            @RequestParam(value = "results_per_page", required = false, defaultValue = "10" ) int resultsPerPage,
+            @RequestParam(value = "results_per_page", required = false) int resultsPerPage,
             @RequestParam(value = "country", required = false, defaultValue = "us" ) String country
     ) {
         List<Job> jobs = this.jobService.getJobsFromApi(country, String.valueOf(page), String.valueOf(resultsPerPage), keyWord, desiredLocation); // this will call the api>

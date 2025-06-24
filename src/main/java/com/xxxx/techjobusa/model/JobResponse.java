@@ -3,6 +3,7 @@ package com.xxxx.techjobusa.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.xxxx.techjobusa.entity.Job;
 import com.xxxx.techjobusa.entity.Location;
 import lombok.Builder;
 import lombok.Data;
@@ -40,5 +41,17 @@ public class JobResponse {
     public void unpackCompany(Company company) {
         this.company = company;
         this.companyName = company != null ? company.getDisplayName() : null;
+    }
+
+    public static JobResponse convertToJobResponse(Job job) {
+        return JobResponse.builder()
+                .id(job.getId())
+                .title(job.getTitle())
+                .description(job.getDescription())
+                .companyName(job.getCompanyName())
+                .contractType(job.getContractType())
+                .applyUrl(job.getApplyUrl())
+                .salary(job.getSalary())
+                .build();
     }
 }

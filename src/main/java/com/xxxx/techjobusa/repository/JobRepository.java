@@ -11,4 +11,5 @@ import java.util.List;
 public interface JobRepository extends CrudRepository<Job, Long> {
 
     List<Job> findByTitleContainingIgnoreCaseAndLocation_IdIn(String keyword, List<Long> locationIds);
+
 }

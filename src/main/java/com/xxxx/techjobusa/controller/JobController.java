@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/jobs")
@@ -34,7 +35,7 @@ public class JobController {
     }
 
     @GetMapping("/search")
-    public List<JobResponse> searchJobs(@RequestParam("what") String keyWord,
+    public List<JobResponse> getJobsWhenThereAreNewData(@RequestParam("what") String keyWord,
                                 @RequestParam("where") String desiredLocation,
                                 @RequestParam(value = "number_of_results", required = false, defaultValue = "10" ) int numberOfResults) {
         log.info("keyWord = " + keyWord + desiredLocation + numberOfResults);
@@ -43,10 +44,17 @@ public class JobController {
     }
 
     @GetMapping("/search2")
-    public List<JobResponse> searchJobs2() {
-        List<Job> jobs = this.jobService.getJobsFromApi(); // this will call the api>
+    public List<JobResponse> searchJobsWhenThereAreOldData(
+            @RequestParam("what") String keyWord,
+            @RequestParam("where") String desiredLocation,
+            @RequestParam(value = "page", required = false, defaultValue = "1" ) int page,
+            @RequestParam(value = "results_per_page", required = false, defaultValue = "10" ) int resultsPerPage,
+            @RequestParam(value = "country", required = false, defaultValue = "us" ) String country
+    ) {
+        List<Job> jobs = this.jobService.getJobsFromApi(country, String.valueOf(page), String.valueOf(resultsPerPage), keyWord, desiredLocation); // this will call the api>
         log.info("jobs = " + jobs);
-        return null;
+        List<JobResponse> jobResponses = jobs.stream().map(JobResponse::convertToJobResponse).collect(Collectors.toList());
+        return jobResponses;
     }
     // call api to have the job
 }

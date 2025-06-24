@@ -1,5 +1,6 @@
 package com.xxxx.techjobusa.service;
 
+import com.xxxx.techjobusa.api.AdzunaAPI;
 import com.xxxx.techjobusa.entity.Job;
 import com.xxxx.techjobusa.entity.Location;
 import com.xxxx.techjobusa.model.AdzunaJobStructure;
@@ -31,25 +32,32 @@ public class JobService {
     public List<JobResponse> findByTitleContainingIgnoreCaseAndLocationIgnoreCase(String keyWord, String desiredLocation) {
         List<Location> locations = locationRepository.findByCountryStateContainsIgnoreCase(desiredLocation);
         List<Long> locationIds = locations.stream().map(Location::getId).collect(Collectors.toList());
-        log.info("locationIds = " + locationIds);
         List<Job> jobs = jobRepository.findByTitleContainingIgnoreCaseAndLocation_IdIn(keyWord, locationIds);
-        System.out.println(jobs);
         List<JobResponse> jobResponses = jobs.stream().map(JobService::convertToJobResponse).collect(Collectors.toList());
         return jobResponses;
     }
 
-    public List<Job> getJobsFromApi() {
+    public List<Job> getJobsFromApi(String  country, String currentPage, String resultsPerPage, String what, String where) {
+        String url = AdzunaAPI.builder().
+                country(country).
+                currentPage(currentPage).
+                resultsPerPage(resultsPerPage).
+                // title
+                what(what).
+                // city
+                where(where).
+                build().getUrl();
+        log.info("url = " + url);
         AdzunaResponse res =  webClient.get()
-                .uri("https://api.adzuna.com/v1/api/jobs/us/search/1?app_key=b5eb1040fb7ddea6fbc9a13a891f1f6e&app_id=6ddc0eff&results_per_page=30&what=software+engineer&where=usa")
+                .uri(url)
                 .retrieve()
                 .bodyToMono(AdzunaResponse.class)
                 .block();
         log.info("res = " + res.getResults());
         List<AdzunaJobStructure> jobResponses = res.getResults();
-//        jobRepository.saveAll(res.getResults());
         List<Job> jobs = jobResponses.stream().map(this::convertToJob).toList();
         jobRepository.saveAll(jobs);
-        return null;
+        return jobs;
     }
 
     private Job convertToJob(AdzunaJobStructure adzunaJobStructure) {
